@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Visual Interaction Selector</title>
+
+
+</head>
+
+<body>
+
+    <h1>Mock Webpage</h1>
+  
+    <div>
+    <button id="selection-mode-toggle" class="toggle-button" onclick="selectionMode()">selection mode</button>
+  <br>
+    <button class="interactive-element" data-label="Subscribe" onclick="showAlert(this)">
+        Subscribe
+    </button>
+    <button class="interactive-element" data-label="Download" onclick="showAlert(this)">
+        Download
+    </button>
+    <button class="interactive-element" data-label="Contact Us" onclick="showAlert(this)">
+        Contact Us
+    </button>
+    <br>
+    <br>
+
+    <a href="#" class="interactive-element" data-label="Read More" onclick="showAlert(this)">Read More</a>
+    <a href="#" class="interactive-element" data-label="Visit Our Store" onclick="showAlert(this)">Visit Our Store</a>
+    <br>
+    <br>
+
+    <select class="interactive-element" data-label="Dropdown" onchange="showAlert(this)">
+        <option value="Option 1">Option 1</option>
+        <option value="Option 2">Option 2</option>
+        <option value="Option 3">Option 3</option>
+    </select>
+    <br>
+    <br>
+    <div class="interactive-element" data-label="Video">
+        <video controls width="320">
+            <source src="placeholder.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+        </video>
+    </div>
+</div>
+
+    <script>
+        const toggleButton = document.getElementById("selection-mode-toggle");
+        const interactiveElements = document.querySelectorAll(
+            ".interactive-element"
+        );
+        function showAlert(element) {
+            var dataLabel = element.getAttribute("data-label");
+            alert("You clicked: " + dataLabel);
+        }
+        function selectionMode() { }
+
+        toggleButton.addEventListener("click", () => {
+            selectionMode = !selectionMode;
+
+            toggleButton.textContent = selectionMode
+                ? "Enter Selection Mode"
+                : "Exit Selection Mode";
+
+            if (selectionMode) {
+                interactiveElements.forEach((element) => {
+                    element.setAttribute("selected", "false");
+                });
+            }
+        });
+        interactiveElements.forEach((element) => {
+            element.addEventListener("mouseover", () => {
+                if (!selectionMode) {
+                    element.style.border = "7px solid #0077b6";
+                }
+            });
+            element.addEventListener("mouseover", () => {
+                if (!selectionMode && element.getAttribute("selected") == "true")
+
+                    console.log("interact with: " + element.tagName + " _ " + element.textContent)
+            });
+
+            element.addEventListener("mouseout", () => {
+                if (!selectionMode && element.getAttribute("selected") !== "true") {
+                    element.style.border = "1px solid #ddd";
+                }
+            });
+
+            element.addEventListener("click", () => {
+                if (!selectionMode) {
+                    const isSelected = element.getAttribute("selected") === "true";
+                    element.setAttribute("selected", isSelected ? "false" : "true");
+                    console.log( element.tagName + " _ " + element.textContent + " is selected for tracking")
+                }
+            });
+        });
+    </script>
+
+    <link rel="stylesheet" type="text/css" href="style.css" />
+</body>
+
+</html>
